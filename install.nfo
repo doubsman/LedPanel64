@@ -1,0 +1,29 @@
+# https://learn.adafruit.com/raspberry-pi-led-matrix-display/software
+# rpi-fb-matrix.git
+sudo apt-get update
+sudo apt-get install -y build-essential git libconfig++-dev
+cd ~
+git clone --recursive https://github.com/adafruit/rpi-fb-matrix.git
+cd rpi-fb-matrix
+make clean all
+
+#configure matrix.cfg
+sudo ./display-test matrix.cfg
+
+sudo ./rpi-fb-matrix matrix.cfg
+
+
+# https://learn.adafruit.com/adafruit-rgb-matrix-plus-real-time-clock-hat-for-raspberry-pi/driving-matrices
+# rpi-rgb-led-matrix 
+sudo apt-get install python3-pip
+sudo apt-get install python3-numpy
+sudo apt-get install libopenjp2-7-dev
+sudo apt-get install python3-opencv
+sudo pip3 install imageio
+
+curl https://raw.githubusercontent.com/adafruit/Raspberry-Pi-Installer-Scripts/master/rgb-matrix.sh >rgb-matrix.sh
+sudo bash rgb-matrix.sh
+
+sudo python3 ./Legpoanel.py albumtest
+
+sudo shutdown -h now
