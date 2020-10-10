@@ -36,10 +36,10 @@ class ImagesDisplay():
             sleep(0.05)
 
     def prepare_image(self, imgpath):
-        if isinstance(imgpath, Image):
-            img = imgpath
-        else:
+        if isinstance(imgpath, str):
             img = Image.open(imgpath)
+        else:
+            img = imgpath
         return img.convert('RGB')
 
     def display_images(self, imgdefiled = True, imgscrolled = True, imgmyscrolled = True):

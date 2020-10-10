@@ -35,8 +35,9 @@ class ImageDrawing():
             self.matrix.SwapOnVSync(offset_canvas)
         self.matrix.SwapOnVSync(offset_canvas)
 
-    def image_draw_text(self, mytext, textcolor = (255,99,71), textfont = "DejaVuSerif", textsize = 26):
+    def image_draw_text(self, mytext, textcolor = (255,99,71), textfont = "DejaVuSerif", textsize = 36):
         img = Image.new('RGB', (self.size, self.size), 'black')
         draw = ImageDraw.Draw(img)
         font = ImageFont.truetype(textfont, textsize)
-        draw.text((0, 10),mytext, textcolor, font=font)
+        draw.text((0, 5),mytext, textcolor, font=font)
+        self.matrix.SetImage(img)
