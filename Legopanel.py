@@ -2,7 +2,8 @@ from sys import argv, stdout
 from os import system, listdir, path
 from time import sleep
 from rgbmatrix import RGBMatrix, RGBMatrixOptions
-from images_transition import ImageTransition, ImagesPath
+from images_transition import ImageTransition
+from images_display import ImagesDisplay
 from image_scroller import ImageScroller
 from image_hour import ImageHour
 from image_draw import ImageDraw
@@ -54,7 +55,7 @@ imgterm = True
 
 print('LEGO DISPLAY PANEL version : {}'.format(version))
 
-ImagePanel = ImagesPath(matrix, size, durimage, durangif)
+ImagePanel = ImagesDisplay(matrix, size, durimage, durangif)
 ImagePanel.display_image(imgintro)
 
 
