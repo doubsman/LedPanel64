@@ -10,7 +10,6 @@ from images_display import ImagesDisplay
 class ImagesTransitions(ImagesDisplay):
 
     def __init__(self, matrix, pathimg, size, durationimg, durationgif, durationtra, passgif = 4, fadestep = 10):
-        super(ImagesTransitions, self).__init__()
         self.matrix = matrix
         self.pathimg = pathimg
         self.size = size
@@ -18,9 +17,8 @@ class ImagesTransitions(ImagesDisplay):
         self.durationgif = durationgif
         self.durationtra = durationtra
         self.listimages = []
-        self.listimgcv2 = []
         self.tempo = []
-        # build list images carroussel
+        # build list images
         print('build list images transitions :' + pathimg)
         self.build_transitions(passgif, fadestep)
         print("   duration: {}s, {} Images".format(int(sum(self.tempo, 0)), len(self.listimages)))
@@ -45,7 +43,7 @@ class ImagesTransitions(ImagesDisplay):
             print('   ' + ('0' + str(indimg1))[-2:], ('0' + str(indimg2))[-2:], listfiles[indimg1], listfiles[indimg2])
             if listfiles[indimg1].endswith('gif'):
                 listgif = self.build_list_gif(listfiles[indimg1])
-                self.listimgcv2 += listgif * passgif
+                self.listimages += listgif * passgif
                 self.tempo += [self.durationgif] * len(listgif) * passgif
                 img1 = listgif[0]
                 if listfiles[indimg2].endswith('gif') and indimg1 != indimg2:
@@ -53,6 +51,8 @@ class ImagesTransitions(ImagesDisplay):
                     img2 = listgif2[0]
                 elif indimg1 != indimg2:
                     img2 = listfiles[indimg2]
+                else:
+                    img2 = img1
                 self.tempo += [self.durationgif] + [self.durationtra] * 10
             elif listfiles[indimg2].endswith('gif'):
                 listgif = self.build_list_gif(listfiles[indimg2])
@@ -63,25 +63,27 @@ class ImagesTransitions(ImagesDisplay):
                 img1 = listfiles[indimg1]
                 img2 = listfiles[indimg2]
                 self.tempo += [self.durationimg] + [self.durationtra] * 10
-            self.listimgcv2 += self.convert_list_images(self.fadeIn(img1, img2, fadestep))
+            if indimg1 != indimg2:
+                self.listimages += self.fadeIn(img1, img2, fadestep)
             indimg1 += 1
-    
+
     def fadeIn(self, pathimg1, pathimg2, fadestep):
         """"Build transition with 2 images cv2."""
         img1 = self.prepare_imagecv2(pathimg1)
         img2 = self.prepare_imagecv2(pathimg2)
-        yield(img1)
+        listfadecv2 = [img1]
         for seq in range(0, fadestep): 
             fadein = seq/float(fadestep) 
             dst = cv2.addWeighted(img1, 1 - fadein, img2, fadein, 0)
-            yield(dst)
+            listfadecv2.append(dst)
+        return self.convert_list_images(listfadecv2)
 
     def prepare_imagecv2(self, imgpath):
         dsize = (self.size, self.size)
         if isinstance(imgpath, str):
-            img = imgpath
+            img = cv2.imread(imgpath)           
         else:
-            img = cv2.imread(imgpath)
+            img = imgpath
         return cv2.resize(img, dsize)
 
 

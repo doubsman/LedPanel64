@@ -17,7 +17,7 @@ class ImageScroller():
             self.img = img
         self.width, self.heigth = self.img.size
         self.build_images()
-        print("   {} Images".format(len(self.listimg)))
+        #print("   {} Images".format(len(self.listimg)))
 
     def image_scroller(self):
         """Display to panel (step, step) scroll image."""

@@ -1,4 +1,4 @@
-from sys import argv, stdout
+from sys import argv, stdin
 from time import sleep
 from keyboard import is_pressed
 from rgbmatrix import RGBMatrix, RGBMatrixOptions
@@ -9,6 +9,18 @@ from image_hour import ImageHour
 from image_draw import ImageDrawing
 from text_scroller import TextScroller
 from colors_pulsing import ColorsPulsing
+import select
+import yaml
+
+
+def keyinput(step, keydefault):
+    i, _, _ = select.select( [stdin], [], [], step)
+    if (i):
+       k = stdin.readline().strip()
+       return(k)
+    else:
+       # all demo
+       return(keydefault)
 
 if len(argv) < 2:
     pathvid = r'./video'
@@ -17,34 +29,36 @@ else:
     pathimg = argv[1]
     pathvid = argv[2]
 
+with open(r'./config.yaml') as file:
+    configyaml = yaml.full_load(file)
+
 # Configuration matrix leds
 options = RGBMatrixOptions()
-options.rows = 32
-options.cols = 64
-options.chain_length = 2
-options.parallel = 1
-options.hardware_mapping = 'adafruit-hat'
-options.pixel_mapper_config="U-mapper;Rotate:180"
+options.rows = configyaml['Matrix']['rows']
+options.cols = configyaml['Matrix']['cols']
+options.chain_length = configyaml['Matrix']['chain_length']
+options.hardware_mapping = configyaml['Matrix']['hardware_mapping']
+options.pixel_mapper_config = configyaml['Matrix']['pixel_mapper_config']
 
 matrix = RGBMatrix(options = options)
 size = matrix.width
 
-version = 0.81
-durimage = 10 
-durtrans = 0.3
-durangif = 0.1
-durvideo = 0.05
-mytext = "Vieillir c'est une obligation, grandir c'est un choix."
-bigfont = "./fonts/texgyre-27.bdf"
-imgintro = "./images/Qberq_64.png"
+version = configyaml['version']
+durimage = configyaml['Duration']['image']
+durtrans = configyaml['Duration']['transition']
+durangif = configyaml['Duration']['gif']
+durvideo = configyaml['Duration']['video']
+mytext = configyaml['Options']['text']
+bigfont =  configyaml['Options']['bigfont']
+imgintro = configyaml['Options']['image_intro']
 
 print('LEGO DISPLAY PANEL version : {}'.format(version))
 ImagePanel = ImagesDisplay(matrix, size, durimage, durangif)
 ImageDrawPanel = ImageDrawing(matrix, size)
 
-tim=9
-while tim > 0:
-    ImageDrawPanel.image_draw_text(('0'+str(tim)[-2:]))
+tim=5
+while tim >= 0:
+    ImageDrawPanel.image_draw_text_reggae(('0'+str(tim)[-2:]))
     tim -=1
     sleep(1)    
 ImagePanel.display_image(imgintro)
@@ -62,8 +76,10 @@ while True:
     8 display video
     9 scroll text
     a colors pulsing
-    """)
-    ans=input("What would you like to do? ")
+
+    What would you like to do? : """, end='', flush=True)
+    ans=keyinput(20, "8")
+    print('')
     if ans=="1":
         #1 intro
         TextScroller(matrix, 'LEGO DISPLAY PANEL version : {}'.format(version), bigfont, (0,255,0), 40, True)

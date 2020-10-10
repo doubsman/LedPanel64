@@ -20,7 +20,7 @@ sudo apt-get install python3-numpy
 sudo apt-get install libopenjp2-7-dev
 sudo apt-get install python3-opencv
 sudo pip3 install imageio
-sudo pip3 install keyboard
+sudo pip3 install pyyaml
 
 curl https://raw.githubusercontent.com/adafruit/Raspberry-Pi-Installer-Scripts/master/rgb-matrix.sh >rgb-matrix.sh
 sudo bash rgb-matrix.sh

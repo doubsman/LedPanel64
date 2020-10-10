@@ -35,9 +35,11 @@ class ImageDrawing():
             self.matrix.SwapOnVSync(offset_canvas)
         self.matrix.SwapOnVSync(offset_canvas)
 
-    def image_draw_text(self, mytext, textcolor = (255,99,71), textfont = "DejaVuSerif", textsize = 36):
+    def image_draw_text_reggae(self, mytext, textcolor = (255,99,71), textfont = "DejaVuSerif", textsize = 42):
         img = Image.new('RGB', (self.size, self.size), 'black')
         draw = ImageDraw.Draw(img)
         font = ImageFont.truetype(textfont, textsize)
-        draw.text((0, 5),mytext, textcolor, font=font)
+        draw.text((4, 9),mytext,  (0,128,0), font=font)
+        draw.text((6, 11),mytext, (255,255,0), font=font)
+        draw.text((8, 13),mytext, (255,0,0), font=font)
         self.matrix.SetImage(img)

@@ -1,0 +1,21 @@
+---
+
+version : 0.82
+
+Matrix:
+  rows : 32
+  cols : 64
+  chain_length : 2
+  hardware_mapping : "adafruit-hat"
+  pixel_mapper_config : "U-mapper;Rotate:180"
+
+Duration:
+  image : 10 
+  transition : 0.3
+  gif : 0.1
+  video : 0.05
+ 
+Options:
+  text : "Vieillir c'est une obligation, grandir c'est un choix."
+  bigfont : "./fonts/texgyre-27.bdf"
+  image_intro : "./images/Qberq_64.png"
