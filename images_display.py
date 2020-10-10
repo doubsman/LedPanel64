@@ -22,27 +22,27 @@ class ImagesDisplay():
         self.tempo = []
     
     def display_image(self, imgpath, indice = -1):
-	    img = self.prepare_image(imgpath)
+        img = self.prepare_image(imgpath)
         self.matrix.SetImage(img)
-		if indice > -1: 
+        if indice > -1: 
             sleep(self.tempo[indice])
 
     def display_scrollimage(self, imgpath):
         img = self.prepare_image(imgpath)
-		# Then scroll image across matrix...
-		for n in range(-64, 65):  # Start off top-left, move off bottom-right
-			self.matrix.Clear()
-			self.matrix.SetImage(img, n, n)
-			sleep(0.05)
+        # Then scroll image across matrix...
+        for n in range(-64, 65):  # Start off top-left, move off bottom-right
+            self.matrix.Clear()
+            self.matrix.SetImage(img, n, n)
+            sleep(0.05)
 
     def prepare_image(self, imgpath):
-	    if isinstance(imgpath, Image):
+        if isinstance(imgpath, Image):
             img = imgpath
-		else:
-			img = Image.open(imgpath)
-		return img.convert('RGB')
+        else:
+            img = Image.open(imgpath)
+        return img.convert('RGB')
 
-    def display_images(self, imgdefiled = True, imgscrolled = False, imgmyscrolled = True):
+    def display_images(self, imgdefiled = True, imgscrolled = True, imgmyscrolled = True):
         indice = 0
         for img in self.listimages:
 			# not for gifs

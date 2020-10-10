@@ -80,9 +80,9 @@ class ImagesTransitions(ImagesDisplay):
         dsize = (self.size, self.size)
         if isinstance(imgpath, str):
             img = imgpath
-    	else:
-			img = cv2.imread(imgpath)
-		return cv2.resize(img, dsize)
+        else:
+            img = cv2.imread(imgpath)
+        return cv2.resize(img, dsize)
 
 
 

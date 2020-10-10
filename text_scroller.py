@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+
 from rgbmatrix import graphics
 from time import sleep
 from image_hour import ImageHour

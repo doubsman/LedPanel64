@@ -1,17 +1,18 @@
 #!/usr/bin/env python
+from PIL import Image, ImageFont, ImageDraw
 from time import sleep
 from random import randint, shuffle
 from image_hour import ImageHour
 
-class ImageDraw():
+class ImageDrawing():
     """Draw a panel canvas."""
 
-    def __init__(self, matrix):
-        super(ImageDraw, self).__init__()
+    def __init__(self, matrix, size):
+        super(ImageDrawing, self).__init__()
         self.matrix = matrix
-        self.image_draw()
+        self.size = size
 
-    def image_draw(self):
+    def image_draw_demo(self):
         offset_canvas = self.matrix.CreateFrameCanvas()
         for x in range(0, self.matrix.width):
             offset_canvas.SetPixel(x, x, 255, 255, 255)
@@ -33,3 +34,9 @@ class ImageDraw():
             offset_canvas.SetPixel(randint(0, self.matrix.width), randint(0, self.matrix.height), r, g, b)
             self.matrix.SwapOnVSync(offset_canvas)
         self.matrix.SwapOnVSync(offset_canvas)
+
+    def image_draw_text(self, mytext, textcolor = (255,99,71), textfont = "DejaVuSerif", textsize = 26):
+        img = Image.new('RGB', (self.size, self.size), 'black')
+        draw = ImageDraw.Draw(img)
+        font = ImageFont.truetype(textfont, textsize)
+        draw.text((0, 10),mytext, textcolor, font=font)
