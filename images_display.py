@@ -45,7 +45,7 @@ class ImagesDisplay():
     def display_images(self, imgdefiled = True, imgscrolled = True, imgmyscrolled = True):
         indice = 0
         for img in self.listimages:
-			# not for gifs
+            # not for gifs
             if self.tempo[indice] == self.durationimg:
                 if imgscrolled:
                     self.display_scrollimage(img)
@@ -76,7 +76,6 @@ class ImagesDisplay():
         """Convert file Gif to list images cv2."""
         dsize = (self.size, self.size)
         gif = mimread(pathgif)
-        nums = len(gif)
         # convert form RGB to BGR
         listcv2  = [cv2.cvtColor(img, cv2.COLOR_RGB2BGR) for img in gif]
         listgif = []

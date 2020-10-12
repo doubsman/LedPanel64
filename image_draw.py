@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 from PIL import Image, ImageFont, ImageDraw
-from time import sleep
-from random import randint, shuffle
+from random import randint
 from image_hour import ImageHour
 
 class ImageDrawing():

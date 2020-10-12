@@ -1,7 +1,4 @@
 #!/usr/bin/env python
-from os import listdir, path
-from imageio import mimread
-from PIL import Image
 from time import sleep
 import cv2
 from images_display import ImagesDisplay

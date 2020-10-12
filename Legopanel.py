@@ -1,7 +1,8 @@
 from sys import argv, stdin
 from time import sleep
-from keyboard import is_pressed
+from yaml import full_load
 from rgbmatrix import RGBMatrix, RGBMatrixOptions
+import select
 from images_transitions import ImagesTransitions
 from images_display import ImagesDisplay
 from image_scroller import ImageScroller
@@ -9,8 +10,6 @@ from image_hour import ImageHour
 from image_draw import ImageDrawing
 from text_scroller import TextScroller
 from colors_pulsing import ColorsPulsing
-import select
-import yaml
 
 
 def keyinput(step, keydefault):
@@ -30,7 +29,7 @@ else:
     pathvid = argv[2]
 
 with open(r'./config.yaml') as file:
-    configyaml = yaml.full_load(file)
+    configyaml = full_load(file)
 
 # Configuration matrix leds
 options = RGBMatrixOptions()
