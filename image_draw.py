@@ -2,6 +2,9 @@
 from PIL import Image, ImageFont, ImageDraw
 from random import randint
 from image_hour import ImageHour
+# list fonts ttf
+# fc-list -f '%{file}\n' :lang=fr
+
 
 class ImageDrawing():
     """Draw a panel canvas."""
@@ -34,11 +37,20 @@ class ImageDrawing():
             self.matrix.SwapOnVSync(offset_canvas)
         self.matrix.SwapOnVSync(offset_canvas)
 
-    def image_draw_text_reggae(self, mytext, textcolor = (255,99,71), textfont = "DejaVuSerif", textsize = 42):
+    def image_draw_text_reggae(self, mytext, textfont = "DejaVuSerif", textsize = 42):
         img = Image.new('RGB', (self.size, self.size), 'black')
         draw = ImageDraw.Draw(img)
         font = ImageFont.truetype(textfont, textsize)
         draw.text((4, 9),mytext,  (0,128,0), font=font)
         draw.text((6, 11),mytext, (255,255,0), font=font)
         draw.text((8, 13),mytext, (255,0,0), font=font)
+        self.matrix.SetImage(img)
+
+    def image_draw_text_test(self, mytext, textcolorfont = (51, 102, 204), textfont = "DejaVuSerif", textsize = 42):
+        img = Image.open('flower.png').convert('RGB')
+        draw = ImageDraw.Draw(img)
+        font = ImageFont.truetype(textfont, textsize)
+        draw.text((6, 11),mytext, textcolorfont, font=font)
+        tfont = ImageFont.truetype(textfont, textsize - 1)
+        draw.text((7, 12),mytext, (255, 255, 0), font=tfont)
         self.matrix.SetImage(img)

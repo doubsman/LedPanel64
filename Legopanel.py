@@ -57,7 +57,7 @@ ImageDrawPanel = ImageDrawing(matrix, size)
 
 tim=5
 while tim >= 0:
-    ImageDrawPanel.image_draw_text_reggae(('0'+str(tim)[-2:]))
+    ImageDrawPanel.image_draw_text_test(('0'+str(tim)[-2:]))
     tim -=1
     sleep(1)    
 ImagePanel.display_image(imgintro)
@@ -77,7 +77,7 @@ while True:
     a colors pulsing
 
     What would you like to do? : """, end='', flush=True)
-    ans=keyinput(20, "8")
+    ans=keyinput(20, "4")
     print('')
     if ans=="1":
         #1 intro

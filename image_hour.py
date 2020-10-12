@@ -40,28 +40,29 @@ class ImageHour():
 
     def build_image_analog_hour(self, indice):
         """ Draw an analogue clock face."""
-        
         now = localtime()
         
         img = Image.new('RGB', (self.size, self.size), 'black')
         draw = ImageDraw.Draw(img)
+        draw.ellipse((0,0,63,63), fill="white")
 
-        colour_white = 192
-
-        draw.ellipse((2,2,63,63), outline=colour_white)
-        draw.ellipse((3,3,62,62), outline=colour_white)
+        for i in range(60):
+            radian_angle = math.pi * (i * 6) / 180.0
+            x = 31 + 32 * math.cos(radian_angle)
+            y = 31 + 32 * math.sin(radian_angle)            
+            draw.point((x+2, y+2), fill="green")  # mins
+        for i in range(12):
+            radian_angle = math.pi * (i * 30) / 180.0
+            x = 31 + 32 * math.cos(radian_angle)
+            y = 31 + 32 * math.sin(radian_angle)  
+            draw.rectangle([(x+1, y+1), (x+2, y+2)], fill="yellow")  # hours
+            
+        draw.line(self.clockhand(now.tm_hour * 30 + now.tm_min / 2, 20), fill="red", width=4)
+        draw.line(self.clockhand(now.tm_min * 6 + now.tm_sec / 10, 22), fill="blue", width=3)
+        draw.line(self.clockhand(now.tm_sec * 6, 25), fill="yellow", width=2)
         
-        for i in range(0, 60): 
-            # drawing background lines 
-            if (i % 5) == 0: 
-                #draw.drawLine(, 0,, 0)
-                pass
-        draw.line(self.clockhand(now.tm_hour * 30 + now.tm_min / 2, 20), fill=colour_white, width=4)
-        draw.line(self.clockhand(now.tm_min * 6 + now.tm_sec / 10, 22), fill=colour_white, width=3)
-        draw.line(self.clockhand(now.tm_sec * 6, 25), fill=colour_white, width=2)
-        
-        img.save('Legopanel.jpg')
-        return img
+        #img.save('/tmp/Legopanel.jpg')
+        return img.resize((self.size, self.size),Image.ANTIALIAS)
 
     def clockhand(self, angle, length):
         """
