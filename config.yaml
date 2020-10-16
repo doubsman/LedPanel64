@@ -1,13 +1,13 @@
 ---
 
-version : 0.82
+version : 0.83
 
 Matrix:
   rows : 32
   cols : 64
   chain_length : 2
   hardware_mapping : "adafruit-hat"
-  pixel_mapper_config : "U-mapper;Rotate:180"
+  pixel_mapper_config : "Rotate:180;U-mapper;Rotate:180"
 
 Duration:
   image : 10 

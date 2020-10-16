@@ -5,9 +5,9 @@ from time import sleep
 
 class ImageScroller():
 
-    def __init__(self, matrix, step, img):
+    def __init__(self, matrix, img):
         super(ImageScroller, self).__init__()
-        self.step = step
+        self.step = matrix.width
         self.matrix = matrix
         self.listimg = []
         if isinstance(img, str):
@@ -24,7 +24,6 @@ class ImageScroller():
         double_buffer = self.matrix.CreateFrameCanvas()
         for img in self.listimg:
             xpos = 0
-            img.resize((self.matrix.width, self.matrix.height), Image.ANTIALIAS)
             img = img.convert('RGB')
             img_width, img_height = img.size
             double_buffer.SetImage(img, -xpos)

@@ -50,7 +50,7 @@ class ImagesDisplay():
                 if imgscrolled:
                     self.display_scrollimage(img)
                 if imgmyscrolled:
-                    ImageScroller(self.matrix, self.size, img).image_scroller()
+                    ImageScroller(self.matrix, img).image_scroller()
             if imgdefiled:
                 self.display_image(img, indice)
                 indice += 1
@@ -68,6 +68,7 @@ class ImagesDisplay():
                self.tempo += [self.durationgif] * len(listgif) * self.passgif
             else:
                img = Image.open(imgpath)
+               img = img.resize((self.matrix.width, self.matrix.height), Image.ANTIALIAS)
                self.listimages.append(img.convert('RGB'))
                self.tempo += [self.durationimg]
         print("   duration: {}s, {} Images".format(int(sum(self.tempo, 0)), len(self.listimages)))

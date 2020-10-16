@@ -57,7 +57,7 @@ ImageDrawPanel = ImageDrawing(matrix, size)
 
 tim=5
 while tim >= 0:
-    ImageDrawPanel.image_draw_text_test(('0'+str(tim)[-2:]))
+    ImageDrawPanel.image_draw_text_reggae(("{:02d}".format(tim)))
     tim -=1
     sleep(1)    
 ImagePanel.display_image(imgintro)
@@ -80,39 +80,39 @@ while True:
     ans=keyinput(20, "4")
     print('')
     if ans=="1":
-        #1 intro
+        print("#1 intro")
         TextScroller(matrix, 'LEGO DISPLAY PANEL version : {}'.format(version), bigfont, (0,255,0), 40, True)
     elif ans=="2":
-        #2 demo drawing pixel panel
+        print("#2 demo drawing pixel panel")
         ImageDrawPanel.image_draw_demo()
     elif ans=="3":
-        #3 display large image
+        print("#3 display large image")
         Imagebigforma2 = ImageScroller(matrix, size, r'./imagesbigwidth/qberk.png')
         Imagebigforma2.image_scroller()
     elif ans=="4":
-        #4 display hour
+        print("#4 display hour")
         ImageHour(matrix, size, 60)
     elif ans=="5":
-        #5 display carroussel folder
+        print("#5 display carroussel folder")
         ImageCarousel = ImagesTransitions(matrix, pathimg, size, durimage, durangif, durtrans)
         ImageCarousel.display_imagesTransitions()
     elif ans=="6":
-        #6 display scoll list images
+        print("#6 display scoll list images")
         ImagePanel.preload_list(pathimg)
         ImagePanel.display_images()
     elif ans=="7":
-        #7 display large image
+        print("#7 display large image")
         Imagebigforma1 = ImageScroller(matrix, size, r'./imagesbigwidth/Leagues_1792.png')
         Imagebigforma1.image_scroller()
     elif ans=="8":
-        #8 display video
+        print("#8 display video")
         VideosGif = ImagesTransitions(matrix, pathvid, size, durimage, durvideo, durtrans, 1, 0)
         VideosGif.display_imagesTransitions()
     elif ans=="9":
-        #9 scroll text
+        print("#9 scroll text")
         TextScroller(matrix, mytext, bigfont, (128,0,128), 40)
     elif ans=="a":
-        #a colors demo
+        print("#a colors demo")
         ColorsPulsing(matrix)
     elif ans=="0":
         TextScroller(matrix, 'LEGO DISPLAY PANEL version : {}'.format(version), bigfont, (0,255,0), 40, True)

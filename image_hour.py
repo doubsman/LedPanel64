@@ -38,31 +38,33 @@ class ImageHour():
         shuffle(rgbl)
         return tuple(rgbl)
 
-    def build_image_analog_hour(self, indice):
+    def build_image_analog_hour(self, indice=1):
         """ Draw an analogue clock face."""
         now = localtime()
         
-        img = Image.new('RGB', (self.size, self.size), 'black')
+        img = Image.open('clock64.png').convert('RGB')
         draw = ImageDraw.Draw(img)
-        draw.ellipse((0,0,63,63), fill="white")
-
-        for i in range(60):
-            radian_angle = math.pi * (i * 6) / 180.0
-            x = 31 + 32 * math.cos(radian_angle)
-            y = 31 + 32 * math.sin(radian_angle)            
-            draw.point((x+2, y+2), fill="green")  # mins
-        for i in range(12):
-            radian_angle = math.pi * (i * 30) / 180.0
-            x = 31 + 32 * math.cos(radian_angle)
-            y = 31 + 32 * math.sin(radian_angle)  
-            draw.rectangle([(x+1, y+1), (x+2, y+2)], fill="yellow")  # hours
+        #draw.ellipse((1, 1, self.size - 2, self.size - 2), fill="white")
+        # hours
+        #for i in range(12):
+        #    draw.ellipse(self.clocktick( i * 30, 4), fill="red")
             
-        draw.line(self.clockhand(now.tm_hour * 30 + now.tm_min / 2, 20), fill="red", width=4)
-        draw.line(self.clockhand(now.tm_min * 6 + now.tm_sec / 10, 22), fill="blue", width=3)
-        draw.line(self.clockhand(now.tm_sec * 6, 25), fill="yellow", width=2)
+        draw.line(self.clockhand(now.tm_hour * 30 + now.tm_min / 2, 15), fill="red", width=5)
+        draw.line(self.clockhand(now.tm_min * 6 + now.tm_sec / 10, 20), fill="blue", width=3)
+        draw.line(self.clockhand(now.tm_sec * 6, 25), fill="yellow", width=1)
         
-        #img.save('/tmp/Legopanel.jpg')
+        #img.save('Legopanel.jpg')
         return img.resize((self.size, self.size),Image.ANTIALIAS)
+
+    def clocktick(self, angle, length):
+        radian_angle = math.pi * angle / 180.0
+        center = ((self.size) / 2)
+        lengthcenter = center - length 
+        x = center + lengthcenter * math.cos(radian_angle)
+        y = center + lengthcenter * math.sin(radian_angle)
+        x2 = center + lengthcenter * math.cos(radian_angle)
+        y2 = center + lengthcenter * math.sin(radian_angle)
+        return [(x,y),(x2 + length, y2 + length)]
 
     def clockhand(self, angle, length):
         """
@@ -70,7 +72,10 @@ class ImageHour():
         Angle 0 is 12 o'clock, 90 is 3 o'clock.
         Based around (32,32) as origin, (0,0) in top left.
         """
-        radian_angle = math.pi * angle / 180.0
-        x = 32 + length * math.cos(radian_angle)
-        y = 32 + length * math.sin(radian_angle)
-        return [(32,32),(x,y)]
+        center = ((self.size) / 2)
+        radian_angle = math.pi * (angle - 90) / 180.0
+        x = center + length * math.cos(radian_angle)
+        y = center + length * math.sin(radian_angle)
+        return [(center,center),(x,y)]
+
+#ImageHour('',64,4).build_image_analog_hour()

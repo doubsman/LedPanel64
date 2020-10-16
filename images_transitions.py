@@ -37,7 +37,7 @@ class ImagesTransitions(ImagesDisplay):
                 indimg2 = 0
             else:
                 indimg2 = indimg1 + 1
-            print('   ' + ('0' + str(indimg1))[-2:], ('0' + str(indimg2))[-2:], listfiles[indimg1], listfiles[indimg2])
+            print('   ' + "{:02d}".format(indimg1), "{:02d}".format(indimg2), listfiles[indimg1], listfiles[indimg2])
             if listfiles[indimg1].endswith('gif'):
                 listgif = self.build_list_gif(listfiles[indimg1])
                 self.listimages += listgif * passgif
