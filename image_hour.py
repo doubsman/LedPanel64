@@ -6,10 +6,10 @@ import math
 
 class ImageHour():
 
-    def __init__(self, matrix, size, duration, typeclock = 'analog'):
+    def __init__(self, matrix, duration, typeclock = 'analog'):
         super(ImageHour, self).__init__()
         self.matrix = matrix
-        self.size = size
+        self.size = self.matrix.width
         self.duration = duration
         self.typeclock = typeclock
         self.display_hour()

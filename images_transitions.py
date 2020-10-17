@@ -6,10 +6,10 @@ from images_display import ImagesDisplay
 
 class ImagesTransitions(ImagesDisplay):
 
-    def __init__(self, matrix, pathimg, size, durationimg, durationgif, durationtra, passgif = 4, fadestep = 10):
+    def __init__(self, matrix, pathimg, durationimg, durationgif, durationtra, passgif = 4, fadestep = 10):
         self.matrix = matrix
         self.pathimg = pathimg
-        self.size = size
+        self.size = self.matrix.width
         self.durationimg = durationimg
         self.durationgif = durationgif
         self.durationtra = durationtra

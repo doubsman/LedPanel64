@@ -10,11 +10,11 @@ from image_scroller import ImageScroller
 
 class ImagesDisplay():
 
-    def __init__(self, matrix, size, durationimg, durationgif, passgif = 4):
+    def __init__(self, matrix, durationimg, durationgif, passgif = 4):
         super(ImagesDisplay, self).__init__()
         self.matrix = matrix
         self.pathimg = ""
-        self.size = size
+        self.size = self.matrix.width
         self.durationimg = durationimg
         self.durationgif = durationgif
         self.passgif = passgif
@@ -42,7 +42,7 @@ class ImagesDisplay():
             img = imgpath
         return img.convert('RGB')
 
-    def display_images(self, imgdefiled = True, imgscrolled = True, imgmyscrolled = True):
+    def display_images(self, imgdefiled = True, imgscrolled = False, imgmyscrolled = True):
         indice = 0
         for img in self.listimages:
             # not for gifs

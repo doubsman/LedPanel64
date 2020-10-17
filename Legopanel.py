@@ -40,7 +40,6 @@ options.hardware_mapping = configyaml['Matrix']['hardware_mapping']
 options.pixel_mapper_config = configyaml['Matrix']['pixel_mapper_config']
 
 matrix = RGBMatrix(options = options)
-size = matrix.width
 
 version = configyaml['version']
 durimage = configyaml['Duration']['image']
@@ -52,8 +51,8 @@ bigfont =  configyaml['Options']['bigfont']
 imgintro = configyaml['Options']['image_intro']
 
 print('LEGO DISPLAY PANEL version : {}'.format(version))
-ImagePanel = ImagesDisplay(matrix, size, durimage, durangif)
-ImageDrawPanel = ImageDrawing(matrix, size)
+ImagePanel = ImagesDisplay(matrix, durimage, durangif)
+ImageDrawPanel = ImageDrawing(matrix)
 
 tim=5
 while tim >= 0:
@@ -77,7 +76,7 @@ while True:
     a colors pulsing
 
     What would you like to do? : """, end='', flush=True)
-    ans=keyinput(20, "4")
+    ans=keyinput(20, "0")
     print('')
     if ans=="1":
         print("#1 intro")
@@ -87,14 +86,14 @@ while True:
         ImageDrawPanel.image_draw_demo()
     elif ans=="3":
         print("#3 display large image")
-        Imagebigforma2 = ImageScroller(matrix, size, r'./imagesbigwidth/qberk.png')
+        Imagebigforma2 = ImageScroller(matrix, r'./imagesbigwidth/qberk.png')
         Imagebigforma2.image_scroller()
     elif ans=="4":
         print("#4 display hour")
-        ImageHour(matrix, size, 60)
+        ImageHour(matrix, 60)
     elif ans=="5":
         print("#5 display carroussel folder")
-        ImageCarousel = ImagesTransitions(matrix, pathimg, size, durimage, durangif, durtrans)
+        ImageCarousel = ImagesTransitions(matrix, pathimg, durimage, durangif, durtrans)
         ImageCarousel.display_imagesTransitions()
     elif ans=="6":
         print("#6 display scoll list images")
@@ -102,11 +101,11 @@ while True:
         ImagePanel.display_images()
     elif ans=="7":
         print("#7 display large image")
-        Imagebigforma1 = ImageScroller(matrix, size, r'./imagesbigwidth/Leagues_1792.png')
+        Imagebigforma1 = ImageScroller(matrix, r'./imagesbigwidth/Leagues_1792.png')
         Imagebigforma1.image_scroller()
     elif ans=="8":
         print("#8 display video")
-        VideosGif = ImagesTransitions(matrix, pathvid, size, durimage, durvideo, durtrans, 1, 0)
+        VideosGif = ImagesTransitions(matrix, pathvid, durimage, durvideo, durtrans, 1, 0)
         VideosGif.display_imagesTransitions()
     elif ans=="9":
         print("#9 scroll text")
@@ -117,11 +116,11 @@ while True:
     elif ans=="0":
         TextScroller(matrix, 'LEGO DISPLAY PANEL version : {}'.format(version), bigfont, (0,255,0), 40, True)
         # build out while, no read sdcard for the demo
-        ImageCarousel = ImagesTransitions(matrix, pathimg, size, durimage, durangif, durtrans)
+        ImageCarousel = ImagesTransitions(matrix, pathimg, durimage, durangif, durtrans)
         ImagePanel.preload_list(pathimg)
-        VideosGif = ImagesTransitions(matrix, pathvid, size, durimage, durvideo, durtrans, 1, 0)
-        Imagebigforma1 = ImageScroller(matrix, size, r'./imagesbigwidth/Leagues_1792.png')
-        Imagebigforma2 = ImageScroller(matrix, size, r'./imagesbigwidth/qberk.png')
+        VideosGif = ImagesTransitions(matrix, pathvid, durimage, durvideo, durtrans, 1, 0)
+        Imagebigforma1 = ImageScroller(matrix, r'./imagesbigwidth/Leagues_1792.png')
+        Imagebigforma2 = ImageScroller(matrix, r'./imagesbigwidth/qberk.png')
         print('start demo... : Press CTRL-C to stop.')
         while True:
             #2 drawing pixel panel
@@ -129,7 +128,7 @@ while True:
             #3 display large image
             Imagebigforma2.image_scroller()
             #4 display hour
-            ImageHour(matrix, size, 60)
+            ImageHour(matrix, 60)
             #5 display carroussel folder
             ImageCarousel.display_imagesTransitions()
             #6 display scoll list images

@@ -9,10 +9,10 @@ from image_hour import ImageHour
 class ImageDrawing():
     """Draw a panel canvas."""
 
-    def __init__(self, matrix, size):
+    def __init__(self, matrix):
         super(ImageDrawing, self).__init__()
         self.matrix = matrix
-        self.size = size
+        self.size = self.matrix.width
 
     def image_draw_demo(self):
         offset_canvas = self.matrix.CreateFrameCanvas()
