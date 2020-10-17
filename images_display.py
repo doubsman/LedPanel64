@@ -27,13 +27,22 @@ class ImagesDisplay():
         if indice > -1: 
             sleep(self.tempo[indice])
 
-    def display_scrollimage(self, imgpath):
+    def display_scrollimage(self, imgpath, speed = 0.05):
         img = self.prepare_image(imgpath)
         # Then scroll image across matrix...
         for n in range(-64, 65):  # Start off top-left, move off bottom-right
             self.matrix.Clear()
             self.matrix.SetImage(img, n, n)
-            sleep(0.05)
+            sleep(speed)
+
+    def display_rotateimage(self, imgpath, speed = 0.02):
+        img = self.prepare_image(imgpath)
+        # Then scroll image across matrix...
+        for n in range(0, 360):
+            rotated = img.rotate(n)
+            #self.matrix.Clear()
+            self.matrix.SetImage(rotated)
+            sleep(speed)
 
     def prepare_image(self, imgpath):
         if isinstance(imgpath, str):
@@ -73,7 +82,7 @@ class ImagesDisplay():
                self.tempo += [self.durationimg]
         print("   duration: {}s, {} Images".format(int(sum(self.tempo, 0)), len(self.listimages)))
    
-    def build_list_gif(self, pathgif):
+    def build_list_gif(self, pathgif, nocv2 = True):
         """Convert file Gif to list images cv2."""
         dsize = (self.size, self.size)
         gif = mimread(pathgif)
@@ -82,7 +91,10 @@ class ImagesDisplay():
         listgif = []
         for img in listcv2:
             listgif.append(cv2.resize(img, dsize))
-        return self.convert_list_images(listgif)
+        if nocv2:
+            return self.convert_list_images(listgif)
+        else:
+            return listgif
     
     def convert_list_images(self, listcv2):
         """Convert Images cv2 to Images PIL."""

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 from time import sleep
-import cv2
+import cv2, numpy
 from images_display import ImagesDisplay
 
 
@@ -32,6 +32,8 @@ class ImagesTransitions(ImagesDisplay):
         listfiles = self.get_list_files()
         listfiles.sort(key=lambda v: v.upper())
         indimg1 = 0
+        listgif = []
+        listgif2 = []
         while indimg1 < len(listfiles):
             if indimg1 + 1 == len(listfiles):
                 indimg2 = 0
@@ -39,22 +41,28 @@ class ImagesTransitions(ImagesDisplay):
                 indimg2 = indimg1 + 1
             print('   ' + "{:02d}".format(indimg1), "{:02d}".format(indimg2), listfiles[indimg1], listfiles[indimg2])
             if listfiles[indimg1].endswith('gif'):
-                listgif = self.build_list_gif(listfiles[indimg1])
+                if indimg1 > 0:
+                    listgif = listgif2
+                    img1 = img2
+                else:
+                    listgif = self.build_list_gif(listfiles[indimg1])
+                    img1 = self.convertimgtocv2(listgif[0])
                 self.listimages += listgif * passgif
                 self.tempo += [self.durationgif] * len(listgif) * passgif
-                img1 = listgif[0]
+
                 if listfiles[indimg2].endswith('gif') and indimg1 != indimg2:
                     listgif2 = self.build_list_gif(listfiles[indimg2])
-                    img2 = listgif2[0]
+                    img2 = self.convertimgtocv2(listgif2[0])
                 elif indimg1 != indimg2:
                     img2 = listfiles[indimg2]
                 else:
                     img2 = img1
                 self.tempo += [self.durationgif] + [self.durationtra] * 10
+                
             elif listfiles[indimg2].endswith('gif'):
-                listgif = self.build_list_gif(listfiles[indimg2])
+                listgif2 = self.build_list_gif(listfiles[indimg2])
                 img1 = listfiles[indimg1]
-                img2 = listgif[0]
+                img2 = self.convertimgtocv2(listgif2[0])
                 self.tempo += [self.durationimg] + [self.durationtra] * 10
             else:
                 img1 = listfiles[indimg1]
@@ -74,6 +82,9 @@ class ImagesTransitions(ImagesDisplay):
             dst = cv2.addWeighted(img1, 1 - fadein, img2, fadein, 0)
             listfadecv2.append(dst)
         return self.convert_list_images(listfadecv2)
+
+    def convertimgtocv2(self, img):
+        return cv2.cvtColor(numpy.array(img), cv2.COLOR_RGB2BGR)
 
     def prepare_imagecv2(self, imgpath):
         dsize = (self.size, self.size)

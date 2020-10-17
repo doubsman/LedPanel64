@@ -54,12 +54,16 @@ print('LEGO DISPLAY PANEL version : {}'.format(version))
 ImagePanel = ImagesDisplay(matrix, durimage, durangif)
 ImageDrawPanel = ImageDrawing(matrix)
 
-tim=5
+tim=3
 while tim >= 0:
     ImageDrawPanel.image_draw_text_reggae(("{:02d}".format(tim)))
     tim -=1
     sleep(1)    
 ImagePanel.display_image(imgintro)
+ImagePanel.display_rotateimage(imgintro)
+
+VideosGif = ImagesTransitions(matrix, pathvid, durimage, durvideo, durtrans, 1, 0)
+VideosGif.display_imagesTransitions()
 
 while True:
     print("""
