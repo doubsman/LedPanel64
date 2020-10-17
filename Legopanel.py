@@ -59,11 +59,10 @@ while tim >= 0:
     ImageDrawPanel.image_draw_text_reggae(("{:02d}".format(tim)))
     tim -=1
     sleep(1)    
-ImagePanel.display_image(imgintro)
+ImagePanel.display_psyrotateimage(imgintro, 0)
 ImagePanel.display_rotateimage(imgintro)
-
-VideosGif = ImagesTransitions(matrix, pathvid, durimage, durvideo, durtrans, 1, 0)
-VideosGif.display_imagesTransitions()
+ImagePanel.display_psyrotateimage(imgintro)
+ImagePanel.display_image(imgintro)
 
 while True:
     print("""

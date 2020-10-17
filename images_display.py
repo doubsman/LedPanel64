@@ -37,12 +37,28 @@ class ImagesDisplay():
 
     def display_rotateimage(self, imgpath, speed = 0.02):
         img = self.prepare_image(imgpath)
-        # Then scroll image across matrix...
         for n in range(0, 360):
             rotated = img.rotate(n)
-            #self.matrix.Clear()
             self.matrix.SetImage(rotated)
             sleep(speed)
+
+    def display_psyrotateimage(self, imgpath, sens = 1, speed = 0.01):
+        img = self.prepare_image(imgpath)
+        for n in range(0, 360):
+            if n % 18:
+                percent = abs(sens - (n/360)) 
+                nwidth, nheight = img.size
+                nwidth = max((nwidth * percent) , 1)
+                nheight = max((nheight * percent) , 1)
+                imgtemp = img.resize((int(nwidth), int(nheight)), Image.ANTIALIAS)
+                img_w, img_h = imgtemp.size
+                rotated = Image.new('RGB', (self.size, self.size), 'black')
+                bg_w, bg_h = rotated.size
+                offset = ((bg_w - img_w) // 2, (bg_h - img_h) // 2)
+                rotated.paste(imgtemp, offset)
+                rotated = rotated.rotate(n)
+                self.matrix.SetImage(rotated)
+                sleep(speed)
 
     def prepare_image(self, imgpath):
         if isinstance(imgpath, str):
