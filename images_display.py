@@ -10,7 +10,7 @@ from image_scroller import ImageScroller
 
 class ImagesDisplay():
 
-    def __init__(self, matrix, durationimg, durationgif, passgif = 4):
+    def __init__(self, matrix, durationimg, durationgif, passgif = 6):
         super(ImagesDisplay, self).__init__()
         self.matrix = matrix
         self.pathimg = ""
@@ -42,23 +42,22 @@ class ImagesDisplay():
             self.matrix.SetImage(rotated)
             sleep(speed)
 
-    def display_psyrotateimage(self, imgpath, sens = 1, speed = 0.01):
+    def display_psyrotateimage(self, imgpath, sens = 1, speed = 0.02):
         img = self.prepare_image(imgpath)
-        for n in range(0, 360):
-            if n % 18:
-                percent = abs(sens - (n/360)) 
-                nwidth, nheight = img.size
-                nwidth = max((nwidth * percent) , 1)
-                nheight = max((nheight * percent) , 1)
-                imgtemp = img.resize((int(nwidth), int(nheight)), Image.ANTIALIAS)
-                img_w, img_h = imgtemp.size
-                rotated = Image.new('RGB', (self.size, self.size), 'black')
-                bg_w, bg_h = rotated.size
-                offset = ((bg_w - img_w) // 2, (bg_h - img_h) // 2)
-                rotated.paste(imgtemp, offset)
-                rotated = rotated.rotate(n)
-                self.matrix.SetImage(rotated)
-                sleep(speed)
+        for n in range(0, 360, 18):
+            percent = abs(sens - (n/360)) 
+            nwidth, nheight = img.size
+            nwidth = max((nwidth * percent) , 1)
+            nheight = max((nheight * percent) , 1)
+            imgtemp = img.resize((int(nwidth), int(nheight)), Image.ANTIALIAS)
+            img_w, img_h = imgtemp.size
+            rotated = Image.new('RGB', (self.size, self.size), 'black')
+            bg_w, bg_h = rotated.size
+            offset = ((bg_w - img_w) // 2, (bg_h - img_h) // 2)
+            rotated.paste(imgtemp, offset)
+            rotated = rotated.rotate(n)
+            self.matrix.SetImage(rotated)
+            sleep(speed)
 
     def prepare_image(self, imgpath):
         if isinstance(imgpath, str):
@@ -67,18 +66,19 @@ class ImagesDisplay():
             img = imgpath
         return img.convert('RGB')
 
-    def display_images(self, imgdefiled = True, imgscrolled = False, imgmyscrolled = True):
+    def display_images(self, imgscrolled = False, imgmyscrolled = True):
         indice = 0
         for img in self.listimages:
             # not for gifs
-            if self.tempo[indice] == self.durationimg:
-                if imgscrolled:
-                    self.display_scrollimage(img)
-                if imgmyscrolled:
-                    ImageScroller(self.matrix, img).image_scroller()
-            if imgdefiled:
-                self.display_image(img, indice)
-                indice += 1
+            if self.tempo[indice] == self.durationimg and imgscrolled:
+                self.display_scrollimage(img)
+            if imgmyscrolled:
+                imgscro = ImageScroller(self.matrix, img)
+                imgscro.image_scroller(0, 2)
+            self.display_image(img, indice)
+            if imgmyscrolled:
+                imgscro.image_scroller(1, 2)
+            indice += 1
 
     def preload_list(self, pathimg):
         """Build list Images + list tempo for the reading."""

@@ -45,6 +45,7 @@ class ImageDrawing():
         draw.text((6, 11),mytext, (255,255,0), font=font)
         draw.text((8, 13),mytext, (255,0,0), font=font)
         self.matrix.SetImage(img)
+        return img
 
     def image_draw_text_test(self, mytext, textcolorfont = (51, 102, 204), textfont = "DejaVuSerif", textsize = 42):
         img = Image.new('RGB', (self.size, self.size), 'black')

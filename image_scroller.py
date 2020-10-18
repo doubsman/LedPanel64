@@ -19,10 +19,11 @@ class ImageScroller():
         self.build_images()
         #print("   {} Images".format(len(self.listimg)))
 
-    def image_scroller(self):
+    def image_scroller(self, numpart = 0, lenpart = 1):
         """Display to panel (step, step) scroll image."""
         double_buffer = self.matrix.CreateFrameCanvas()
-        for img in self.listimg:
+        slide = int(len(self.listimg)/lenpart)
+        for img in self.listimg[slide * numpart:(slide * numpart) + slide]:
             xpos = 0
             img = img.convert('RGB')
             img_width, img_height = img.size

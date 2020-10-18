@@ -56,12 +56,12 @@ ImageDrawPanel = ImageDrawing(matrix)
 
 tim=3
 while tim >= 0:
-    ImageDrawPanel.image_draw_text_reggae(("{:02d}".format(tim)))
+    img = ImageDrawPanel.image_draw_text_reggae(("{:02d}".format(tim)))
     tim -=1
-    sleep(1)    
+    sleep(1)
+ImagePanel.display_psyrotateimage(img)
 ImagePanel.display_psyrotateimage(imgintro, 0)
 ImagePanel.display_rotateimage(imgintro)
-ImagePanel.display_psyrotateimage(imgintro)
 ImagePanel.display_image(imgintro)
 
 while True:
@@ -80,7 +80,8 @@ while True:
 
     What would you like to do? : """, end='', flush=True)
     ans=keyinput(20, "0")
-    print('')
+    #print('')
+    ImagePanel.display_psyrotateimage(imgintro)
     if ans=="1":
         print("#1 intro")
         TextScroller(matrix, 'LEGO DISPLAY PANEL version : {}'.format(version), bigfont, (0,255,0), 40, True)
@@ -117,7 +118,7 @@ while True:
         print("#a colors demo")
         ColorsPulsing(matrix)
     elif ans=="0":
-        TextScroller(matrix, 'LEGO DISPLAY PANEL version : {}'.format(version), bigfont, (0,255,0), 40, True)
+        TextScroller(matrix, 'LEGO DISPLAY PANEL \rversion : {}'.format(version), bigfont, (0,255,0), 40, True)
         # build out while, no read sdcard for the demo
         ImageCarousel = ImagesTransitions(matrix, pathimg, durimage, durangif, durtrans)
         ImagePanel.preload_list(pathimg)
@@ -134,8 +135,6 @@ while True:
             ImageHour(matrix, 60)
             #5 display carroussel folder
             ImageCarousel.display_imagesTransitions()
-            #6 display scoll list images
-            ImagePanel.display_images()
             #7 display large image
             Imagebigforma1.image_scroller()
             #8 display video
@@ -143,6 +142,8 @@ while True:
             #9 scroll text
             TextScroller(matrix, mytext, bigfont, (128,0,128), 40)
             #1 intro
-            TextScroller(matrix, 'LEGO DISPLAY PANEL version : {}'.format(version), bigfont, (0,255,0), 40, True)
+            TextScroller(matrix, 'LEGO DISPLAY PANEL \rversion : {}'.format(version), bigfont, (0,255,0), 40, True)
             #a colors demo
             ColorsPulsing(matrix)
+            #6 display scoll list images
+            ImagePanel.display_images()
