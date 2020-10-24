@@ -15,16 +15,18 @@ sudo ./rpi-fb-matrix matrix.cfg
 
 # https://learn.adafruit.com/adafruit-rgb-matrix-plus-real-time-clock-hat-for-raspberry-pi/driving-matrices
 # rpi-rgb-led-matrix 
-sudo apt-get install python3-pip
-sudo apt-get install python3-numpy
-sudo apt-get install libopenjp2-7-dev
-sudo apt-get install python3-opencv
+sudo apt-get install python3-pip python3-numpy libopenjp2-7-dev python3-opencv
 sudo pip3 install imageio
 sudo pip3 install pyyaml
 
+sudo apt-get install build-essential
 curl https://raw.githubusercontent.com/adafruit/Raspberry-Pi-Installer-Scripts/master/rgb-matrix.sh >rgb-matrix.sh
 sudo bash rgb-matrix.sh
 
-sudo python3 ./Legpoanel.py albumtest
+sudo python3 ./Legopanel.py 
 
 sudo shutdown -h now
+
+
+
+# https://github.com/BNNorman/rpi-rgb-led-matrix-animator.git

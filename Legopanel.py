@@ -10,7 +10,7 @@ from image_hour import ImageHour
 from image_draw import ImageDrawing
 from text_scroller import TextScroller
 from colors_pulsing import ColorsPulsing
-
+from starboard import playstarboard
 
 def keyinput(step, keydefault):
     i, _, _ = select.select( [stdin], [], [], step)
@@ -38,7 +38,10 @@ options.cols = configyaml['Matrix']['cols']
 options.chain_length = configyaml['Matrix']['chain_length']
 options.hardware_mapping = configyaml['Matrix']['hardware_mapping']
 options.pixel_mapper_config = configyaml['Matrix']['pixel_mapper_config']
-
+#options.disable_hardware_pulsing = 0
+# raspberry0
+options.gpio_slowdown = 0
+#options.brightness = 100
 matrix = RGBMatrix(options = options)
 
 version = configyaml['version']
@@ -77,6 +80,7 @@ while True:
     8 display video
     9 scroll text
     a colors pulsing
+    b star board
 
     What would you like to do? : """, end='', flush=True)
     ans=keyinput(20, "0")
@@ -101,7 +105,7 @@ while True:
         ImageCarousel.display_imagesTransitions()
     elif ans=="6":
         print("#6 display scoll list images")
-        ImagePanel.preload_list(pathimg)
+        ImagePanel.preload_pathimgs(pathimg)
         ImagePanel.display_images()
     elif ans=="7":
         print("#7 display large image")
@@ -117,11 +121,14 @@ while True:
     elif ans=="a":
         print("#a colors demo")
         ColorsPulsing(matrix)
+    elif ans=="b":
+        print("#b star board")
+        playstarboard(matrix, 120, 1000, 0)
     elif ans=="0":
         TextScroller(matrix, 'LEGO DISPLAY PANEL \rversion : {}'.format(version), bigfont, (0,255,0), 40, True)
         # build out while, no read sdcard for the demo
         ImageCarousel = ImagesTransitions(matrix, pathimg, durimage, durangif, durtrans)
-        ImagePanel.preload_list(pathimg)
+        ImagePanel.preload_pathimgs(pathimg)
         VideosGif = ImagesTransitions(matrix, pathvid, durimage, durvideo, durtrans, 1, 0)
         Imagebigforma1 = ImageScroller(matrix, r'./imagesbigwidth/Leagues_1792.png')
         Imagebigforma2 = ImageScroller(matrix, r'./imagesbigwidth/qberk.png')
@@ -147,3 +154,5 @@ while True:
             ColorsPulsing(matrix)
             #6 display scoll list images
             ImagePanel.display_images()
+            #b star board
+            playstarboard(matrix, 120, 1000, 0)

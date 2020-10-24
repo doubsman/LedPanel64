@@ -13,7 +13,7 @@ class ImagesDisplay():
     def __init__(self, matrix, durationimg, durationgif, passgif = 6):
         super(ImagesDisplay, self).__init__()
         self.matrix = matrix
-        self.pathimg = ""
+        self.pathimgs = ""
         self.size = self.matrix.width
         self.durationimg = durationimg
         self.durationgif = durationgif
@@ -67,23 +67,24 @@ class ImagesDisplay():
         return img.convert('RGB')
 
     def display_images(self, imgscrolled = False, imgmyscrolled = True):
+        #self.create_gif()
         indice = 0
         for img in self.listimages:
             # not for gifs
             if self.tempo[indice] == self.durationimg and imgscrolled:
                 self.display_scrollimage(img)
-            if imgmyscrolled:
+            if self.tempo[indice] == self.durationimg and imgmyscrolled:
                 imgscro = ImageScroller(self.matrix, img)
                 imgscro.image_scroller(0, 2)
             self.display_image(img, indice)
-            if imgmyscrolled:
+            if self.tempo[indice] == self.durationimg and imgmyscrolled:
                 imgscro.image_scroller(1, 2)
             indice += 1
 
-    def preload_list(self, pathimg):
+    def preload_pathimgs(self, pathimgs):
         """Build list Images + list tempo for the reading."""
-        self.pathimg = pathimg
-        print('build list images :' + self.pathimg)
+        self.pathimgs = pathimgs
+        print('build list images :' + self.pathimgs)
         listfiles = self.get_list_files()
         listfiles.sort(key=lambda v: v.upper())
         for imgpath in listfiles:
@@ -127,7 +128,7 @@ class ImagesDisplay():
         return listimg
     
     def get_list_files(self):
-        return [path.join(self.pathimg, f) for f in listdir(self.pathimg) if path.isfile(path.join(self.pathimg, f))]
+        return [path.join(self.pathimgs, f) for f in listdir(self.pathimgs) if path.isfile(path.join(self.pathimgs, f))]
     
-    def create_gif(self, pathfile = 'carousel.gif'):
+    def create_gif(self, pathfile = '/tmp/display_images.gif'):
         self.listimages[0].save(pathfile, save_all=True, append_images=self.listimages[1:], optimize=False, duration=len(self.tempo)/50, loop=0)
