@@ -26,7 +26,7 @@ class ImageScroller():
         for img in self.listimg[slide * numpart:(slide * numpart) + slide]:
             xpos = 0
             img = img.convert('RGB')
-            img_width, img_height = img.size
+            img_width, _ = img.size
             double_buffer.SetImage(img, -xpos)
             double_buffer.SetImage(img, -xpos + img_width)
             double_buffer = self.matrix.SwapOnVSync(double_buffer)

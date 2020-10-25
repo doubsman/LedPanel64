@@ -41,30 +41,13 @@ class ImageHour():
     def build_image_analog_hour(self, indice=1):
         """ Draw an analogue clock face."""
         now = localtime()
-        
         img = Image.open('clock64.png').convert('RGB')
         draw = ImageDraw.Draw(img)
         #draw.ellipse((1, 1, self.size - 2, self.size - 2), fill="white")
-        # hours
-        #for i in range(12):
-        #    draw.ellipse(self.clocktick( i * 30, 4), fill="red")
-            
         draw.line(self.clockhand(now.tm_hour * 30 + now.tm_min / 2, 15), fill="red", width=5)
         draw.line(self.clockhand(now.tm_min * 6 + now.tm_sec / 10, 20), fill="blue", width=3)
         draw.line(self.clockhand(now.tm_sec * 6, 25), fill="yellow", width=1)
-        
-        #img.save('Legopanel.jpg')
         return img.resize((self.size, self.size),Image.ANTIALIAS)
-
-    def clocktick(self, angle, length):
-        radian_angle = math.pi * angle / 180.0
-        center = ((self.size) / 2)
-        lengthcenter = center - length 
-        x = center + lengthcenter * math.cos(radian_angle)
-        y = center + lengthcenter * math.sin(radian_angle)
-        x2 = center + lengthcenter * math.cos(radian_angle)
-        y2 = center + lengthcenter * math.sin(radian_angle)
-        return [(x,y),(x2 + length, y2 + length)]
 
     def clockhand(self, angle, length):
         """

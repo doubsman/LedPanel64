@@ -6,9 +6,9 @@ from images_display import ImagesDisplay
 
 class ImagesTransitions(ImagesDisplay):
 
-    def __init__(self, matrix, pathimg, durationimg, durationgif, durationtra, passgif = 4, fadestep = 10):
+    def __init__(self, matrix, pathimgs, durationimg, durationgif, durationtra, passgif = 4, fadestep = 10):
         self.matrix = matrix
-        self.pathimg = pathimg
+        self.pathimgs = pathimgs
         self.size = self.matrix.width
         self.durationimg = durationimg
         self.durationgif = durationgif
@@ -16,7 +16,7 @@ class ImagesTransitions(ImagesDisplay):
         self.listimages = []
         self.tempo = []
         # build list images
-        print('build list images transitions :' + pathimg)
+        print('build list images transitions :' + pathimgs)
         self.build_transitions(passgif, fadestep)
         print("   duration: {}s, {} Images".format(int(sum(self.tempo, 0)), len(self.listimages)))
 

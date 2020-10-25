@@ -5,6 +5,7 @@ from rgbmatrix import RGBMatrix, RGBMatrixOptions
 import select
 from images_transitions import ImagesTransitions
 from images_display import ImagesDisplay
+from images_concat import ImagesConcat
 from image_scroller import ImageScroller
 from image_hour import ImageHour
 from image_draw import ImageDrawing
@@ -57,7 +58,7 @@ print('LEGO DISPLAY PANEL version : {}'.format(version))
 ImagePanel = ImagesDisplay(matrix, durimage, durangif)
 ImageDrawPanel = ImageDrawing(matrix)
 
-tim=3
+tim=5
 while tim >= 0:
     img = ImageDrawPanel.image_draw_text_reggae(("{:02d}".format(tim)))
     tim -=1
@@ -81,11 +82,13 @@ while True:
     9 scroll text
     a colors pulsing
     b star board
+    c images banner
 
     What would you like to do? : """, end='', flush=True)
     ans=keyinput(20, "0")
     #print('')
     ImagePanel.display_psyrotateimage(imgintro)
+    ImagePanel.display_image('./wait.png')
     if ans=="1":
         print("#1 intro")
         TextScroller(matrix, 'LEGO DISPLAY PANEL version : {}'.format(version), bigfont, (0,255,0), 40, True)
@@ -99,6 +102,7 @@ while True:
     elif ans=="4":
         print("#4 display hour")
         ImageHour(matrix, 60)
+        ImageHour(matrix, 60, 'digital')
     elif ans=="5":
         print("#5 display carroussel folder")
         ImageCarousel = ImagesTransitions(matrix, pathimg, durimage, durangif, durtrans)
@@ -124,6 +128,10 @@ while True:
     elif ans=="b":
         print("#b star board")
         playstarboard(matrix, 120, 1000, 0)
+    elif ans=="c":
+        print("#c images banner")
+        Banner = ImagesConcat(matrix, pathimg)
+        Banner.display_concatimages()
     elif ans=="0":
         TextScroller(matrix, 'LEGO DISPLAY PANEL \rversion : {}'.format(version), bigfont, (0,255,0), 40, True)
         # build out while, no read sdcard for the demo
@@ -132,6 +140,7 @@ while True:
         VideosGif = ImagesTransitions(matrix, pathvid, durimage, durvideo, durtrans, 1, 0)
         Imagebigforma1 = ImageScroller(matrix, r'./imagesbigwidth/Leagues_1792.png')
         Imagebigforma2 = ImageScroller(matrix, r'./imagesbigwidth/qberk.png')
+        Banner = ImagesConcat(matrix, pathimg)
         print('start demo... : Press CTRL-C to stop.')
         while True:
             #2 drawing pixel panel
@@ -146,6 +155,8 @@ while True:
             Imagebigforma1.image_scroller()
             #8 display video
             VideosGif.display_imagesTransitions()
+            #4 display hour
+            ImageHour(matrix, 60, 'digital')
             #9 scroll text
             TextScroller(matrix, mytext, bigfont, (128,0,128), 40)
             #1 intro
@@ -156,3 +167,5 @@ while True:
             ImagePanel.display_images()
             #b star board
             playstarboard(matrix, 120, 1000, 0)
+            #c banner images
+            Banner.display_concatimages()
