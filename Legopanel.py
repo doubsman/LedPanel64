@@ -22,15 +22,16 @@ def keyinput(step, keydefault):
        # all demo
        return(keydefault)
 
+with open(r'./config.yaml') as file:
+    configyaml = full_load(file)
+
+
 if len(argv) < 2:
-    pathvid = r'./video'
-    pathimg = r'./images'
+    pathvid = configyaml['Demo']['path_video']
+    pathimg = configyaml['Demo']['path_images']
 else:
     pathimg = argv[1]
     pathvid = argv[2]
-
-with open(r'./config.yaml') as file:
-    configyaml = full_load(file)
 
 # Configuration matrix leds
 options = RGBMatrixOptions()
@@ -39,10 +40,14 @@ options.cols = configyaml['Matrix']['cols']
 options.chain_length = configyaml['Matrix']['chain_length']
 options.hardware_mapping = configyaml['Matrix']['hardware_mapping']
 options.pixel_mapper_config = configyaml['Matrix']['pixel_mapper_config']
+options.brightness = configyaml['Matrix']['brightness']
 #options.disable_hardware_pulsing = 0
 # raspberry0
-options.gpio_slowdown = 0
-#options.brightness = 100
+#options.gpio_slowdown = 0
+#options.pwm_dither_bits 
+options.pwm_lsb_nanoseconds = 100
+#options.show_refresh_rate = 1
+print(dir(options))
 matrix = RGBMatrix(options = options)
 
 version = configyaml['version']
@@ -50,9 +55,9 @@ durimage = configyaml['Duration']['image']
 durtrans = configyaml['Duration']['transition']
 durangif = configyaml['Duration']['gif']
 durvideo = configyaml['Duration']['video']
-mytext = configyaml['Options']['text']
-bigfont =  configyaml['Options']['bigfont']
-imgintro = configyaml['Options']['image_intro']
+mytext = configyaml['Demo']['text']
+bigfont =  configyaml['Demo']['bigfont']
+imgintro = configyaml['Demo']['image_intro']
 
 print('LEGO DISPLAY PANEL version : {}'.format(version))
 ImagePanel = ImagesDisplay(matrix, durimage, durangif)
@@ -67,6 +72,8 @@ ImagePanel.display_psyrotateimage(img)
 ImagePanel.display_psyrotateimage(imgintro, 0)
 ImagePanel.display_rotateimage(imgintro)
 ImagePanel.display_image(imgintro)
+
+
 
 while True:
     print("""
@@ -83,6 +90,7 @@ while True:
     a colors pulsing
     b star board
     c images banner
+    d babe banner
 
     What would you like to do? : """, end='', flush=True)
     ans=keyinput(20, "0")
@@ -132,8 +140,11 @@ while True:
         print("#c images banner")
         Banner = ImagesConcat(matrix, pathimg)
         Banner.display_concatimages()
+    elif ans=="d":
+        print("#d babe banner")
+        Banner = ImagesConcat(matrix, r'./babe')
+        Banner.display_concatimages()
     elif ans=="0":
-        TextScroller(matrix, 'LEGO DISPLAY PANEL \rversion : {}'.format(version), bigfont, (0,255,0), 40, True)
         # build out while, no read sdcard for the demo
         ImageCarousel = ImagesTransitions(matrix, pathimg, durimage, durangif, durtrans)
         ImagePanel.preload_pathimgs(pathimg)
@@ -143,6 +154,8 @@ while True:
         Banner = ImagesConcat(matrix, pathimg)
         print('start demo... : Press CTRL-C to stop.')
         while True:
+            #1 intro
+            TextScroller(matrix, 'LEGO DISPLAY PANEL 64x64 version : {}'.format(version), bigfont, (0,255,0), 40, False)
             #2 drawing pixel panel
             ImageDrawPanel.image_draw_demo()
             #3 display large image
@@ -159,8 +172,6 @@ while True:
             ImageHour(matrix, 60, 'digital')
             #9 scroll text
             TextScroller(matrix, mytext, bigfont, (128,0,128), 40)
-            #1 intro
-            TextScroller(matrix, 'LEGO DISPLAY PANEL \rversion : {}'.format(version), bigfont, (0,255,0), 40, True)
             #a colors demo
             ColorsPulsing(matrix)
             #6 display scoll list images

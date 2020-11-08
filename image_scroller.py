@@ -47,6 +47,7 @@ class ImageScroller():
         for ind in range(0, self.step):
             result = self.extract_part_image(0 - ind, end - ind)
             self.listimg.append(result)
+        self.listimg.append(Image.new('RGB', (self.step, self.step), 'black'))
 
     def extract_part_image(self, start, end):
         box = (start, 0, end, self.heigth)  

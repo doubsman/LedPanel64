@@ -24,4 +24,4 @@ def convertFile(inputpath, targetFormat):
     writer.close()
     print("Done.")
 
-convertFile(r'coquine_online.mp4', TargetFormat.GIF)
+convertFile(r'ghouls.mp4', TargetFormat.GIF)
