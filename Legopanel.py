@@ -27,11 +27,15 @@ with open(r'./config.yaml') as file:
 
 
 if len(argv) < 2:
-    pathvid = configyaml['Demo']['path_video']
+    pathvid = configyaml['Demo']['path_videos']
     pathimg = configyaml['Demo']['path_images']
+    defaultchoise = '0'
+    autodemo = True
 else:
     pathimg = argv[1]
     pathvid = argv[2]
+    defaultchoise = argv[3]
+    autodemo = False
 
 # Configuration matrix leds
 options = RGBMatrixOptions()
@@ -47,7 +51,7 @@ options.brightness = configyaml['Matrix']['brightness']
 #options.pwm_dither_bits 
 options.pwm_lsb_nanoseconds = 100
 #options.show_refresh_rate = 1
-print(dir(options))
+#print(dir(options))
 matrix = RGBMatrix(options = options)
 
 version = configyaml['version']
@@ -76,25 +80,27 @@ ImagePanel.display_image(imgintro)
 
 
 while True:
-    print("""
-    0 all
-    1 intro
-    2 drawing pixel panel
-    3 display large image
-    4 display hour
-    5 display carroussel folder
-    6 display scoll list images
-    7 display large image Leagues_1792
-    8 display video
-    9 scroll text
-    a colors pulsing
-    b star board
-    c images banner
-    d babe banner
+    if not autodemo:
+        print("""
+        0 all
+        1 intro
+        2 drawing pixel panel
+        3 display large image
+        4 display hour
+        5 display carroussel folder
+        6 display scoll list images
+        7 display large image Leagues_1792
+        8 display video
+        9 scroll text
+        a colors pulsing
+        b star board
+        c images banner
+        d babe banner
 
-    What would you like to do? : """, end='', flush=True)
-    ans=keyinput(20, "0")
-    #print('')
+        What would you like to do? : """, end='', flush=True)
+        ans = keyinput(20, defaultchoise)
+    else:
+        ans = defaultchoise
     ImagePanel.display_psyrotateimage(imgintro)
     ImagePanel.display_image('./wait.png')
     if ans=="1":

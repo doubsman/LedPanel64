@@ -20,7 +20,7 @@ class ImageHour():
                 self.matrix.SetImage(self.build_image_analog_hour(ind))
             else:
                 self.matrix.SetImage(self.build_image_digital_hour(ind))
-            sleep(1)
+            sleep(0.25)
 
     def build_image_digital_hour(self, counter, stars = 100):
         img = Image.new('RGB', (self.size, self.size), 'black')

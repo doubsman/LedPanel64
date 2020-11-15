@@ -12,7 +12,7 @@ Matrix:
 
 Duration:
   image : 10 
-  transition : 0.2
+  transition : 0.3
   gif : 0.05
   video : 0.05
  
@@ -21,4 +21,4 @@ Demo:
   bigfont : "./fonts/texgyre-27.bdf"
   image_intro : "./images/Qberq_64.png"
   path_images : "./images"
-  path_video : "./video"
+  path_videos : "./videos"
