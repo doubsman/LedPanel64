@@ -148,8 +148,8 @@ while True:
         Banner.display_concatimages()
     elif ans=="d":
         print("#d babe banner")
-        Banner = ImagesConcat(matrix, r'./babe')
-        Banner.display_concatimages()
+        BannerBabe = ImagesConcat(matrix, r'./babe')
+        BannerBabe.display_concatimages()
     elif ans=="0":
         # build out while, no read sdcard for the demo
         ImageCarousel = ImagesTransitions(matrix, pathimg, durimage, durangif, durtrans)
